@@ -38,7 +38,7 @@ void setup() {
 // the loop function runs over and over again until power down or reset
 void loop() {
 
-	//digitalWrite(LED, HIGH);
+	digitalWrite(LED, HIGH);
 
 	float h = dht.readHumidity();
 	float t = dht.readTemperature();
@@ -78,6 +78,6 @@ void loop() {
 
 	
 	
-	//digitalWrite(LED, LOW);
+	digitalWrite(LED, LOW);
 	delay(500);
 }
