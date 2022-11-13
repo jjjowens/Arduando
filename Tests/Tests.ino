@@ -82,7 +82,7 @@
 	 * &	Binary AND Operator
 	 * |	Binary OR Operator
 	 * ^	Binary XOR Operator
-	 * ~	Binary One's Complemen, flip all bits
+	 * ~	Binary One's Complement, flip all bits
 	 * <<	Binary Left Shift Operator, shift bits to right a given number of times, equivalene to pow(n)
 	 * >>	Binary Right Shift Operator, shirt bits to left a given number of times, equivalent to nsqr(x)
 	 *
