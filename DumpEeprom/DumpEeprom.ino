@@ -1,17 +1,14 @@
 /**
- * Copyright (c) 2022 - James Owens <jjo@arduando.com.br>
+ * Copyright (c) 2022 - James Owens <jjo(at)arduando.com.br>
  *
  * File:	DumpEeprom.ino
  * Created:	14/11/2022 15:33
  * Version:
- * Source: https://github.com/jjjowens/Arduando/blob/master/DumpEeprom/DumpEeprom.ino
+ * Source:  https://github.com/jjjowens/Arduando/blob/master/DumpEeprom/DumpEeprom.ino
  * Website: https://arduando.com.br
  *
- * Description:
- *
- * Revision  Description
- * ========  ===========
- * 
+ * Description: Dumps the content of internal eeprom in microcontroller. 
+ * Tested on Arduino Uno, Nano and Leonardo.
  *
  * DISCLAIMER:
  * The author is in no way responsible for any problems or damage caused by
@@ -29,29 +26,9 @@
 
 void setup() 
 {
-    EEPROM.write(0x4, 'A');
-    EEPROM.write(0x5, 'R');
-    EEPROM.write(0x6, 'D');
-    EEPROM.write(0x7, 'U');
-    EEPROM.write(0x8, 'A');
-    EEPROM.write(0x9, 'N');
-    EEPROM.write(0xA, 'D');
-    EEPROM.write(0xB, 'O');
-
-    EEPROM.write(0x17, 0xFF);
-    EEPROM.write(0x18, 0xFF);
-    EEPROM.write(0x27, 0xFF);
-    EEPROM.write(0x28, 0xFF);
-    EEPROM.write(0x37, 0xFF);
-    EEPROM.write(0x38, 0xFF);
-    EEPROM.write(0x47, 0xFF);
-    EEPROM.write(0x48, 0xFF);
-
-
     Serial.begin(115200);
-  while (!Serial) yield();    // Aguarda até finalização da porta serial
-  dumpEEPROM();
-  
+    while (!Serial) yield();    // Aguarda inicialização da porta serial
+    dumpEEPROM(); 
 }
 
 void loop()
