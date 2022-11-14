@@ -1,44 +1,63 @@
-/* ----------------------------------------------------------------
- * Copyright (C) 2022, James J. Owens. Unless you have purchased 
- * a separate commercial license for this software code, the
- * following terms and conditions apply:
+/**
+ * Copyright (c) 2022 - James Owens <jjo@arduando.com.br>
  *
- * This program is free software: you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License 
- * version 3 as published by the Free Software Foundation.
+ * File:	DumpEeprom.ino
+ * Created:	14/11/2022 15:33
+ * Version:
+ * Source: https://github.com/jjjowens/Arduando/blob/master/DumpEeprom/DumpEeprom.ino
+ * Website: https://arduando.com.br
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
+ * Description:
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses.
+ * Revision  Description
+ * ========  ===========
  * 
- * For more information see https://referenciando.com
- * ----------------------------------------------------------------
+ *
+ * DISCLAIMER:
+ * The author is in no way responsible for any problems or damage caused by
+ * using this code. Use at your own risk.
+ *
+ * LICENSE:
+ * This code is distributed under the GNU Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
+ * More details can be found at http://www.gnu.org/licenses/gpl.txt
  */
 
 
 #include <EEPROM.h>
 
-// Declaração de funções:
-void DumpEEPROM();
-
-
 void setup() 
 {
-  Serial.begin(115200);
+    EEPROM.write(0x4, 'A');
+    EEPROM.write(0x5, 'R');
+    EEPROM.write(0x6, 'D');
+    EEPROM.write(0x7, 'U');
+    EEPROM.write(0x8, 'A');
+    EEPROM.write(0x9, 'N');
+    EEPROM.write(0xA, 'D');
+    EEPROM.write(0xB, 'O');
+
+    EEPROM.write(0x17, 0xFF);
+    EEPROM.write(0x18, 0xFF);
+    EEPROM.write(0x27, 0xFF);
+    EEPROM.write(0x28, 0xFF);
+    EEPROM.write(0x37, 0xFF);
+    EEPROM.write(0x38, 0xFF);
+    EEPROM.write(0x47, 0xFF);
+    EEPROM.write(0x48, 0xFF);
+
+
+    Serial.begin(115200);
   while (!Serial) yield();    // Aguarda até finalização da porta serial
+  dumpEEPROM();
+  
 }
 
-void loop() 
+void loop()
 {
-  DumpEEPROM();
-  // Pausa processamento no thread atual
-  while(1) yield();
+    // Nada para rodar
 }
-
 
 /**
  * Finalidade: ler e imprimir o conteúdo da memória EEPROM de
@@ -50,7 +69,7 @@ void loop()
  * Testado em:  ATMega32U4 (BSFrance LoRa32u4 II), Arduino UNO,
  * Arduino Pro Micro (Leonardo), Arduino NANO
  */
-void DumpEEPROM()
+void dumpEEPROM()
 {
     int memIdx = 0;       // Indice na memória EEPROM
     int n = 0;            
@@ -72,7 +91,7 @@ void DumpEEPROM()
     } while (tmp > 0);
     sprintf(mask, "0x%%.%dX 0x%%.%dX  ", precision, precision);
 
-    Serial.print("\nDumping EEPROM contents (");
+    Serial.print("\nDescarregando conteúdo da EEPROM (");
     Serial.print(addrLength);
     Serial.print(" bytes):\n");
 
@@ -97,5 +116,5 @@ void DumpEEPROM()
         memIdx += n;
         Serial.print("\n");
     }
-    Serial.print("done!");
+    Serial.print("fim!");
 }
