@@ -4,7 +4,7 @@
  * Arquivo:     EscaneadorI2C.ino
  * Criado em:   16/11/2022 12:34
  * Versão:
- * Fonte:       https://github.com/jjjowens/Arduando/blob/master/Scan_I2C_Addresses/EscaneadorI2C.ino
+ * Fonte:       https://github.com/jjjowens/Arduando/tree/master/EscaneadorI2C
  * Website:     https://arduando.com.br
  *
  * Descrição: Escaneia todas as 127 portas possíveis para a interface
