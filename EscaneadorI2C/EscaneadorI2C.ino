@@ -7,7 +7,7 @@
  * Fonte:       https://github.com/jjjowens/Arduando/tree/master/EscaneadorI2C
  * Website:     https://arduando.com.br
  *
- * Descrição: Escaneia todas as 127 portas possíveis para a interface
+ * Descrição: Escaneia todas as 128 portas possíveis para a interface
  * I2C. Se um dispositivo for encontrado, o endereço é apresentado. Em caso 
  * de erro, a respectiva mensagem é apresentada.
  *
@@ -37,7 +37,7 @@ void loop()
 }
 
 /**
- * Finalidade: escanear todas as 127 portas possíveis para a interface
+ * Finalidade: escanear todas as 128 portas possíveis para a interface
  * I2C na plataforma Arduino. Se um dispositivo for encontrado,
  * o endereço é apresentado. Em caso de erro, a respectiva mensagem
  * é apresentada.
@@ -56,7 +56,7 @@ void EscaneadorI2C(void)
     Serial.println("Escaneador de portas I2C");
     Serial.println("Pesquisando...");
     
-    // São 127 endereços possíveis, de 0x00 a 0x127
+    // São 127 endereços possíveis, de 0x00 a 0x7F
     for (deviceAddress = 0; deviceAddress <= 127; deviceAddress++)
     {
         Wire.beginTransmission(deviceAddress);
@@ -98,9 +98,12 @@ void EscaneadorI2C(void)
     }
     if (deviceCounter == 0)
         Serial.println("Nenhum dispositivo I2C foi detectado.");
-    else
-        Serial.println("fim!");
-
+    else {
+        Serial.print("Foram encontrados ");
+        Serial.print(deviceCounter);
+        Serial.println(" dispositivos I2C.");
+    }
+    Serial.println("fim!");
 }
 
 /**

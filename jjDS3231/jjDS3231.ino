@@ -134,3 +134,11 @@ void loop()
 	delay(5000);
 
 }
+
+void RTC_DS3231_turnOffBothAlarms() 
+{     // from http://forum.arduino.cc/index.php?topic=109062.0
+	byteBuffer1 = i2c_readRegisterByte(DS3231_ADDRESS, DS3231_STATUS_REG);
+	byteBuffer1 &= B11111100; //with &= the 0's will set // with |= only the 1's set
+	i2c_writeRegisterByte(DS3231_ADDRESS, DS3231_STATUS_REG, byteBuffer1);
+	rtc_INT0_Flag = false; //clear the flag we use to indicate the RTC alarm occurred
+}
