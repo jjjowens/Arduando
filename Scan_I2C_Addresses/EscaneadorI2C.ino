@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2022 - James Owens <jjo(at)arduando.com.br>
  *
- * Arquivo:	    EscaneadorI2C.ino
- * Criado em:	16/11/2022 12:34
+ * Arquivo:     EscaneadorI2C.ino
+ * Criado em:   16/11/2022 12:34
  * Versão:
- * Fonte:  https://github.com/jjjowens/Arduando/blob/master/DumpEeprom/DumpEeprom.ino
- * Website: https://arduando.com.br
+ * Fonte:       https://github.com/jjjowens/Arduando/blob/master/Scan_I2C_Addresses/EscaneadorI2C.ino
+ * Website:     https://arduando.com.br
  *
  * Descrição: Escaneia todas as 127 portas possíveis para a interface
  * I2C. Se um dispositivo for encontrado, o endereço é apresentado. Em caso 
