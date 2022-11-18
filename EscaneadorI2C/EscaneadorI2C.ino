@@ -78,7 +78,6 @@ void EscaneadorI2C(void)
         case 2:
             // Ignorado para simplificar a leitura dos resultados
             //Serial.print("Nenhum dispositivo foi encontrado no endereço ");
-            //_printAddress(deviceAddress);
             printAddress = false;
             break;
         case 3:
