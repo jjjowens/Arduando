@@ -1,5 +1,7 @@
 /**
- * Copyright (c) 2022 - James Owens <jjo(at)arduando.com.br>
+ * Conceito do código obtido do site
+ * https://create.arduino.cc/projecthub/abdularbi17/how-to-scan-i2c-address-in-arduino-eaadda 
+ * e adaptado e melhorado por James Owens <jjo(at)arduando.com.br> em Novembro de 2022.
  *
  * Arquivo:     EscaneadorI2C.ino
  * Criado em:   16/11/2022 12:34
@@ -9,7 +11,7 @@
  *
  * Descrição: Escaneia todas as 128 portas possíveis para a interface
  * I2C. Se um dispositivo for encontrado, o endereço é apresentado. Em caso 
- * de erro, a respectiva mensagem é apresentada.
+ * de erro, a respectiva mensagem é apresentada. 
  *
  * DISCLAIMER:
  * The author is in no way responsible for any problems or damage caused by
@@ -52,6 +54,7 @@ void EscaneadorI2C(void)
     uint8_t errorCode;
     uint8_t deviceAddress;
     uint8_t deviceCounter = 0;
+    bool printAddress = true;
 
     Serial.println("Escaneador de portas I2C");
     Serial.println("Pesquisando...");
@@ -67,35 +70,39 @@ void EscaneadorI2C(void)
         {
         case 0:
             Serial.print("Um dispositivo I2C foi encontrado no endereço ");
-            _printAddress(deviceAddress);
             deviceCounter++;
             break;
         case 1:
             Serial.print("Erro: Os dados excedem a capacidade do buffer (32 bytes) ao ler o endereço ");
-            _printAddress(deviceAddress);
             break;
         case 2:
             // Ignorado para simplificar a leitura dos resultados
             //Serial.print("Nenhum dispositivo foi encontrado no endereço ");
             //_printAddress(deviceAddress);
+            printAddress = false;
             break;
         case 3:
             Serial.print("Um dispositivo foi encontrado neste endereço, mas não está respondendo ");
-            _printAddress(deviceAddress);
             break;
         case 4:
             Serial.print("Erro: algum outro problema foi detectado (perda de arbitração do bus, erro no bus, etc) no endereço ");
-            _printAddress(deviceAddress);
             break;
         case 5:
             Serial.print("Erro: timeout no endereço ");
-            _printAddress(deviceAddress);
             break;
         default:
             Serial.print("Erro: um erro desconhecido ocorreu ao indagar o endereço ");
-            _printAddress(deviceAddress);
         }
+        if (printAddress)
+        {
+            Serial.print("0x");
+            if (deviceAddress <= 0xF)
+                Serial.print("0");
+            Serial.println(deviceAddress, HEX);
+        }
+        else printAddress = true;
     }
+
     if (deviceCounter == 0)
         Serial.println("Nenhum dispositivo I2C foi detectado.");
     else {
@@ -104,17 +111,4 @@ void EscaneadorI2C(void)
         Serial.println(" dispositivos I2C.");
     }
     Serial.println("fim!");
-}
-
-/**
- * Função auxiliar. Imprime um endereço de um byte na porta serial.
- * Assume que a porta serial tenha sido inicializada
- */
-void _printAddress(uint8_t address)
-{
-    // Adiciona um zero para ficar mais bonito
-    Serial.print("0x");
-    if (address <= 0xF)
-        Serial.print("0");
-    Serial.println(address, HEX);
 }
