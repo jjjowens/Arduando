@@ -65,6 +65,7 @@ void setup()
     pinMode(ALARM_INTERRUPT_PIN, INPUT);
     attachInterrupt(digitalPinToInterrupt(ALARM_INTERRUPT_PIN), alarmISR, FALLING);
 
+    printTimeNow();
     Serial.println("Begin the test");
 
     /* UNCOMMENT THIS BLOCK IF YOU NEED TO SET TIME ON YOUR DS3231
@@ -80,7 +81,6 @@ void setup()
     RTC.setClockMode(clockMode);
     */
 
-    printTimeNow();
 
     // Alarm 1: Add extra minute in the chance minute will change while alarm is being set
     resetAlarm(ALARM1, 1);
@@ -92,6 +92,7 @@ void setup()
 void loop() {
     if (alarmEventFlag == true) 
     {
+        printTimeNow();
         if (RTC.checkIfAlarm(ALARM1))
         {
             handleAlarm1Event();
@@ -152,20 +153,20 @@ void printTimeNow()
 void resetAlarm(uint8_t alarm, uint8_t minute = 0)
 {
     minute = calculateAlarmMinute(alarm, minute);
-    alarmtime = new DateTime(0, 0, 0, 0, minute, 0);
+    DateTime alarmtime(0, 0, 0, 0, minute, 0);
+    printTimeNow();
     if (alarm == ALARM1)
     {
-        setAlarm1(*alarmtime);
+        setAlarm1(alarmtime);
         Serial.print("Alarm1 now set to ring at h:");
         Serial.print(minute); Serial.println("m");
 
     }
     else {
-        setAlarm2(*alarmtime);
+        setAlarm2(alarmtime);
         Serial.print("Alarm2 now set to ring at h:");
         Serial.print(minute); Serial.println("m");
     }
-    delete alarmtime;
 }
 
 // Returns an 8 bit unsigned number between 0 and 59 corresponding to
