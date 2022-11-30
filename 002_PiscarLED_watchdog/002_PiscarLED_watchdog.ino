@@ -41,7 +41,7 @@
 #define WDT_1S		B01000110
 #define WDT_2S		B01000111
 #define WDT_4S		B01100000
-#define WDT_8S		B01000110
+#define WDT_8S		B01100001
 
 // LED conectado no pino 10 através de um restor de 220 Ohms
 #define LED_PIN 10
