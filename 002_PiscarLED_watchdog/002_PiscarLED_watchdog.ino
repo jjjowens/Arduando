@@ -32,16 +32,16 @@
 #define wdt_reset() __asm__ __volatile__ ("wdr")
 
 // Timer prescalers available for the watchdog.
-#define WDT_16MS	0
-#define WDT_32MS	1
-#define WDT_64MS	2
-#define WDT_125MS	3
-#define WDT_250MS	4
-#define WDT_500MS	5
-#define WDT_1S		6
-#define WDT_2S		7
-#define WDT_4S		8
-#define WDT_8S		9
+#define WDT_16MS	B01000000
+#define WDT_32MS	B01000001
+#define WDT_64MS	B01000010
+#define WDT_125MS	B01000011
+#define WDT_250MS	B01000100
+#define WDT_500MS	B01000101
+#define WDT_1S		B01000110
+#define WDT_2S		B01000111
+#define WDT_4S		B01100000
+#define WDT_8S		B01000110
 
 // LED conectado no pino 10 através de um restor de 220 Ohms
 #define LED_PIN 10
@@ -95,23 +95,11 @@ ISR(WDT_vect)
 //  3: habilitar o watchdog e o prescaler (registrador WDTCSR)
 //  4. habilitar a interrupção e setar o prescaler (registrador WDTCSR)
 //  5. habilitar interrupções
-void watchdogInit(uint8_t timeout = WDT_1S)
+void watchdogInit(byte timeout_mask = WDT_1S)
 {
 	cli();
 	wdt_reset();
 	WDTCSR |= B00011000;
-	switch (timeout) {
-	case WDT_16MS:  WDTCSR = B01000000; break;
-	case WDT_32MS:	WDTCSR = B01000001; break;
-	case WDT_64MS:  WDTCSR = B01000010; break;
-	case WDT_125MS: WDTCSR = B01000011; break;
-	case WDT_250MS: WDTCSR = B01000100; break;
-	case WDT_500MS: WDTCSR = B01000101; break;
-	case WDT_1S:	WDTCSR = B01000110; break;
-	case WDT_2S:	WDTCSR = B01000111; break;
-	case WDT_4S:	WDTCSR = B01100000; break;
-	case WDT_8S:	WDTCSR = B01100001; break;
-	default:		WDTCSR = B01000110; break;
-	}
+	WDTCSR = timeout_mask;
 	sei();
 }
