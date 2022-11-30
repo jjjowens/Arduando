@@ -4,7 +4,7 @@
  * Arquivo:     002_PiscarLED_watchdog.ino
  * Arquivo:     29/11/2022 15:24:06
  * Versão:      
- * Fonte:       
+ * Fonte:       https://github.com/jjjowens/Arduando/tree/master/002_PiscarLED_watchdog
  * Website:     https://arduando.com.br
  *
  * Descrição: Esta é uma variação do sketch básico de fazer um LED piscar.
