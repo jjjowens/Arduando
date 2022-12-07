@@ -39,7 +39,7 @@ void loop()
 }
 
 /**
- * Finalidade: escanear todas as 128 portas possíveis para a interface
+ * Finalidade: escanear todas as 111 portas possíveis para a interface
  * I2C na plataforma Arduino. Se um dispositivo for encontrado,
  * o endereço é apresentado. Em caso de erro, a respectiva mensagem
  * é apresentada.
