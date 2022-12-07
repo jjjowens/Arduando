@@ -60,7 +60,7 @@ void EscaneadorI2C(void)
     Serial.println("Pesquisando...");
     
     // São 127 endereços possíveis, de 0x00 a 0x7F
-    for (deviceAddress = 0; deviceAddress <= 127; deviceAddress++)
+    for (deviceAddress = 8; deviceAddress < 120; deviceAddress++)
     {
         Wire.beginTransmission(deviceAddress);
         errorCode = Wire.endTransmission();
