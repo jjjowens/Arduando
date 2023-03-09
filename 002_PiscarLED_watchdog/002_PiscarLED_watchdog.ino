@@ -44,7 +44,7 @@
 #define WDT_8S		B01100001
 
 // LED conectado no pino 10 através de um restor de 220 Ohms
-#define LED_PIN 10
+#define LED_PIN 13
 
 // Varável global acessada pela interrupção do watchdog
 volatile bool _ledToggle = false;
@@ -57,7 +57,8 @@ void watchdogInit(uint8_t);
 void setup()
 {
 	pinMode(LED_PIN, OUTPUT);
-	watchdogInit(WDT_500MS);
+	//watchdogInit(WDT_500MS);
+	watchdogInit(WDT_32MS);
 }
 
 void loop()

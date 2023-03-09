@@ -34,7 +34,7 @@
 // 1, 2, 3, 5, 10.
 // I added dependency between the second and the first alarms for convinience.
 // In the default setting alarm 1 will ring every 5 minutes and alarm 2 therefore every 15 minutes
-#define ALARM1_TIMEOUT 5     // In minutes
+#define ALARM1_TIMEOUT 2     // In minutes
 #define ALARM2_TIMEOUT (ALARM1_TIMEOUT * 3) 
 
 #define ALARM1 1
@@ -58,7 +58,7 @@ uint8_t calculateAlarmMinute(uint8_t, uint8_t = 0);
 
 void setup()
 {
-    Serial.begin(57600);
+    Serial.begin(9600);
     while (!Serial);
     Wire.begin();
 

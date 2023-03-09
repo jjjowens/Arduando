@@ -34,42 +34,105 @@
 * to the test you are trying to run.
 */
 
-//#define WATCHDOG_INTERRUPT_TEST
+#define EFEMERAL_TEST
 //#define BINARY_OPERATIONS_TEST
 //#define ENUM_VARIABLE_TEST
-#define SET_REGISTRY_BIT
+//#define SET_REGISTRY_BIT
+//#define MATH_OPS
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#ifdef EFEMERAL_TEST
+
+void setup()
+{
+	int x;
+	x = rand();
+	switch (x)
+	{
+	case 1:
+		x = 2;
+		break;
+	case 2:
+		x = 3;
+		break;
+	case 3:
+		x = 4;
+		break;
+	default:
+		x = 0;
+		break;
+	}
+	/*
+	if (x == 1)
+	{
+		x = 2;
+	}
+	if (x == 2)
+	{
+		x = 3;
+	}
+	if (x == 3)
+	{
+		x = 4;
+	}
+	else {
+		x = 0;
+	}
+	*/
+}
+
+void loop()
+{
+}
+
+
+#endif
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef WATCHDOG_INTERRUPT_TEST
-#ifdef __AVR_ATmega328P__	
-	// ASSUMES LED IS CONNECTED TO PORT 10 OF ARDUINO UNO, ONLY VALID FOR THE 328P
-	#include<avr/wdt.h>
-	#define wdt_reset() __asm__ __volatile__ ("wdr")	
-	volatile bool _ledToggle = false;
-	ISR(WDT_vect)
-	{
-		_ledToggle = !_ledToggle;
-		wdt_reset();
-	}
-	void setup()
-	{
-		bitSet(DDRB, DDB2); // = pinMode(10)
-		cli();
-		wdt_reset(); // Clear watchdog
-		WDTCSR |= _BV(WDCE) | _BV(WDE); // Enabel WD system reset and prescaler
-		WDTCSR = _BV(WDIE) | _BV(WDP2) | _BV(WDP0); // Enable WD interrupt and set prescaller to 128KHz (~0.5s)
-		sei();
-	}
-	void loop()
-	{
-		// Toggle the LED on port 10 of the Arduino
-		if (_ledToggle) bitSet(PORTB, PORTB2);
-		else bitClear(PORTB, PORTB2);
-	}
+#ifdef MATH_OPS
+
+
+ /**
+ * Converts a given epoch timestamp back to human readable
+ */
+void setup()
+{
+
+	uint32_t epochTime = 1669060782;
+	Serial.begin(9600);
+	while (!Serial) yield();
+	Serial.print("Number: ");
+	Serial.println(epochTime);
+	Serial.print("Year: ");
+	Serial.println((epochTime / 31556926) + 1970);
+	Serial.print("Month: ");
+	Serial.println(((epochTime % 31556926) / 2629743) + 1);
+	Serial.print("Day: ");
+	Serial.println((((epochTime % 31556926) % 2629743) / 86400) + 1);
+	Serial.print("Hour: ");
+	Serial.println((epochTime % 86400) / 3600);
+	Serial.print("Minute: ");
+	Serial.println(((epochTime % 86400) % 3600) / 60);
+	Serial.print("Second: ");
+	Serial.println(((epochTime % 86400) % 3600) % 60);
+}
+
+void loop()
+{
+}
+
+
+
+
 #endif
-#endif
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -139,6 +202,36 @@
 		result = a >> 3;
 		Serial.print(">>(shift riht 3) \tExpected: B00001010 Result: B");
 		Serial.println(result, BIN);
+
+		// Differnce between register shift and bitwise operations
+		a = B01010101;
+		Serial.print("a = "); Serial.println(a, BIN);
+
+	/*
+		B01010101 &
+		B01110110
+		---------
+        B01110111
+
+		bit 5 e 1 set to 1
+		
+		a |= (1<<5) | (1<<1)
+
+	*/
+
+
+		Serial.print("a |= B01110110: "); Serial.println(a | B01110110, BIN);
+		Serial.print("Expected: "); Serial.println("B01110111");
+		Serial.print("a |= (1<<5) | (1<<1): "); Serial.println(a | (1 << 5) | (1 << 1), BIN);
+		Serial.print("Expected: "); Serial.println("B01110111");
+		Serial.print("a = (1<<5) | (1<<1): "); Serial.println((1 << 5) | (1 << 1), BIN);
+		Serial.print("Expected: "); Serial.println("B00100010");
+	
+
+
+		
+
+
 	} /* End testBinary() */
 #endif BINARY_OPERATIONS_TEST
 
